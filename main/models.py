@@ -6,7 +6,7 @@ class DefineUser(models.Model):
     bio = models.CharField(max_length=300)
     profilePic = models.ImageField(null=True,blank=True,upload_to='images/profile/')
     created_on = models.DateTimeField(auto_now_add=True)
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='user')
 
     def __str__(self):
         return str(self.user)
@@ -21,5 +21,14 @@ class Post(models.Model):
     
     def __str__(self):
         return str(self.user)
+
+
+class follow(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    following = models.CharField(max_length=40)
+
+
+# class Follow(models.Model):
+#     user = models.ForeignKey(User,on_delete=models.CASCADE)
 
 

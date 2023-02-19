@@ -4,7 +4,8 @@ from .forms import NewUserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
-from .models import DefineUser,Post
+from .models import DefineUser,Post,follow
+
 # Create your views here.
 
 
@@ -31,10 +32,10 @@ def register(req):
         if req.method == "POST":
             form = NewUserCreationForm(req.POST)
             if form.is_valid():
-                form.save()
+                new_user = form.save()  # Save the newly created user
                 user = form.cleaned_data.get('username')
                 messages.success(req,f'Account was created with username {user}')
-                usercreate = DefineUser.objects.create(bio='',user=req.user)
+                usercreate = DefineUser.objects.create(bio='', user=new_user)  # Assign new_user to the user attribute
                 usercreate.save()
                 return redirect('login')
         return render(req,'register.html',send)
@@ -93,3 +94,37 @@ def create(req):
         post = Post.objects.create(title=title,text=text,image=image,user=user,likes=0)
         return redirect('home')
     return render(req,'create.html')
+
+def viewUser(req,name):
+    if str(req.user.id) == name:
+        return redirect('profile')
+    profile = DefineUser.objects.filter(user=name).first()
+    account_created_at = profile.created_on if profile else None
+    profile_pic_url = profile.profilePic.url if profile and profile.profilePic else None
+    post = Post.objects.filter(user=name)
+    print(post)
+    try:
+        following = follow.objects.get(user=req.user,following=profile)
+        is_following = "following"
+    except Exception as e:
+        is_following = False
+        
+        # print(is_following)
+
+    
+    send = {'profile': profile, 'profile_pic_url': profile_pic_url, 'account_created_at': account_created_at,'posts':post,'following':is_following}
+
+    # print(str(req.user.username) == profile)
+
+    # if str(req.user.username) == profile:
+    #     return redirect('profile')
+
+    if req.method == 'POST':
+        if 'follow' in req.POST:
+            f = follow(user=req.user,following=profile)
+            f.save()
+        elif 'unfollow' in req.POST:
+            follow.objects.filter(user=req.user,following=profile).delete()
+    
+    return render(req, 'user.html', send)
+
