@@ -17,10 +17,11 @@ def index(req):
 def profile(req):
     profile = DefineUser.objects.filter(user=req.user).first()
     account_created_at = profile.created_on if profile else None
+    account_bio = profile.bio if account_created_at else None
     profile_pic_url = profile.profilePic.url if profile and profile.profilePic else None
     post = Post.objects.filter(user=req.user)
     print(post)
-    send = {'profile': profile, 'profile_pic_url': profile_pic_url, 'account_created_at': account_created_at,'posts':post}
+    send = {'profile': profile, 'profile_pic_url': profile_pic_url, 'account_created_at': account_created_at,'posts':post,'account_bio':account_bio,}
     return render(req, 'profile.html', send)
 
 def register(req): 
