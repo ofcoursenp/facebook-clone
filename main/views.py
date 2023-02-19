@@ -13,8 +13,8 @@ def index(req):
     
 @login_required(login_url='login')
 def profile(req):
-    profile = DefineUser.objects.filter(user=req.user).first()  # get the first profile instance for the user
-    profile_pic_url = profile.profilePic.url if profile.profilePic else None  # get the profile picture URL or None if there is no picture
+    profile = DefineUser.objects.filter(user=req.user).first()
+    profile_pic_url = profile.profilePic.url if profile and profile.profilePic else None
     send = {'profile': profile, 'profile_pic_url': profile_pic_url}
     return render(req, 'profile.html', send)
 
@@ -35,7 +35,7 @@ def register(req):
 
 def loginPage(req):
     if req.user.is_authenticated:
-        return redirect('home')
+        return redirect('edit')
     
     else:
         if req.method == "POST":
@@ -72,5 +72,10 @@ def edit(req):
         if bio:
             document.bio = bio
         document.save()
+
+        return redirect('profile')
+
     return render(req,'editprofile.html')
+
+
 

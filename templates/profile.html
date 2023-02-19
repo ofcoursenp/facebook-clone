@@ -13,6 +13,7 @@
   <div class="container mt-5">
     <div class="row">
       <div class="col-md-3">
+    {%if profile_pic_url%}
         <img src='{{profile_pic_url}}' alt="Profile Picture" class="img-fluid rounded-circle" style="display: inline-block;
             width: 172px;
             height: 150px;
@@ -21,6 +22,16 @@
             background-position: center center;
             background-size: cover;
         ">
+    {% else %}
+    <img src="{% static 'default/img.png' %}" alt="Profile Picture" class="img-fluid rounded-circle" style="display: inline-block;
+    width: 172px;
+    height: 150px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+">
+    {% endif %}
       </div>
       <div class="col-md-9">
         <h1 class="display-4">{{ request.user }}</h1>
