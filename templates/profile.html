@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="{% static 'profile.css' %}">
   </head>
   <body style="background-color: lightgray;">
-    <div class="container mt-5">
+    {% include 'header.html' %}
+    <div class="container mt-5" style="padding-top: 80px;">
       <div class="row">
         <div class="col-md-3">
       {%if profile_pic_url%}

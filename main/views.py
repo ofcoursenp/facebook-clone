@@ -95,6 +95,7 @@ def create(req):
         return redirect('home')
     return render(req,'create.html')
 
+@login_required(login_url='login')
 def viewUser(req,name):
     if str(req.user.id) == name:
         return redirect('profile')
@@ -102,6 +103,8 @@ def viewUser(req,name):
     account_created_at = profile.created_on if profile else None
     profile_pic_url = profile.profilePic.url if profile and profile.profilePic else None
     post = Post.objects.filter(user=name)
+    id = req.user.id
+    
     print(post)
     try:
         following = follow.objects.get(user=req.user,following=profile)
@@ -112,7 +115,7 @@ def viewUser(req,name):
         # print(is_following)
 
     
-    send = {'profile': profile, 'profile_pic_url': profile_pic_url, 'account_created_at': account_created_at,'posts':post,'following':is_following}
+    send = {'profile': profile, 'profile_pic_url': profile_pic_url, 'account_created_at': account_created_at,'posts':post,'following':is_following,'id':id}
 
     # print(str(req.user.username) == profile)
 

@@ -69,6 +69,7 @@
     <div>
         {% if user.is_authenticated %}
             <a href="{% url 'logout' %}" style="color: black;">Logout</a>
+            <p style="color: black;" > Welcome {{ request.user }} , Your id : {{  request.user.id }}</p>
         {% else %}
             <a href="{% url 'login' %}" style="color: black;">Login</a>
         {% endif %}
