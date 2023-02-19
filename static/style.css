@@ -117,5 +117,41 @@ footer {
     color: #666;
     border-top: 1px solid #ddd;
 }
+/* posts.css */
 
+.posts-container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+  }
+  
+  .post {
+	background-color: white;
+	border: 1px solid gray;
+	border-radius: 0.5rem;
+	padding: 1rem;
+	box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+	width: calc(33.333% - 1rem);
+	margin-bottom: 1rem;
+  }
+  
+  .post h2 {
+	margin-top: 0;
+  }
+  
+  .post img {
+	max-width: 100%;
+	height: auto;
+	margin: 1rem 0;
+  }
+  
+  .post p {
+	margin-bottom: 0.5rem;
+  }
+  
+  .post p:last-of-type {
+	margin-bottom: 0;
+	font-weight: bold;
+  }
+  
 

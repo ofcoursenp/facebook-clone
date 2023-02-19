@@ -1,9 +1,10 @@
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render,redirect
 from .forms import NewUserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
-from .models import DefineUser
+from .models import DefineUser,Post
 # Create your views here.
 
 
@@ -14,8 +15,11 @@ def index(req):
 @login_required(login_url='login')
 def profile(req):
     profile = DefineUser.objects.filter(user=req.user).first()
+    account_created_at = profile.created_on if profile else None
     profile_pic_url = profile.profilePic.url if profile and profile.profilePic else None
-    send = {'profile': profile, 'profile_pic_url': profile_pic_url}
+    post = Post.objects.filter(user=req.user)
+    print(post)
+    send = {'profile': profile, 'profile_pic_url': profile_pic_url, 'account_created_at': account_created_at,'posts':post}
     return render(req, 'profile.html', send)
 
 def register(req): 
@@ -30,12 +34,14 @@ def register(req):
                 form.save()
                 user = form.cleaned_data.get('username')
                 messages.success(req,f'Account was created with username {user}')
+                usercreate = DefineUser.objects.create(bio='',user=req.user)
+                usercreate.save()
                 return redirect('login')
         return render(req,'register.html',send)
 
 def loginPage(req):
     if req.user.is_authenticated:
-        return redirect('edit')
+        return redirect('home')
     
     else:
         if req.method == "POST":
@@ -77,5 +83,13 @@ def edit(req):
 
     return render(req,'editprofile.html')
 
-
-
+@login_required(login_url='login')
+def create(req):
+    if req.method == "POST":
+        title = req.POST.get('title')
+        text = req.POST.get('content')
+        image = req.FILES.get('image')
+        user = req.user
+        post = Post.objects.create(title=title,text=text,image=image,user=user,likes=0)
+        return redirect('home')
+    return render(req,'create.html')

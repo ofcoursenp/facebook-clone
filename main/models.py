@@ -9,6 +9,17 @@ class DefineUser(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.bio
+        return str(self.user)
+
+class Post(models.Model):
+    title = models.CharField(max_length=80)
+    text = models.CharField(max_length=250)
+    image = models.ImageField(null=True,blank=True,upload_to='post/images')
+    created_on = models.DateField(auto_now_add=True)
+    likes = models.IntegerField(default=0)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return str(self.user)
 
 
