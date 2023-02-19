@@ -1,0 +1,115 @@
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #4267B2;
+	color: white;
+	padding: 10px 20px;
+}
+
+.logo {
+	font-size: 28px;
+	font-weight: bold;
+}
+
+nav ul {
+	list-style: none;
+	display: flex;
+}
+
+nav li {
+	margin: 0 10px;
+}
+
+nav a {
+	color: white;
+	text-decoration: none;
+}
+
+.profile {
+	display: flex;
+	align-items: center;
+}
+
+.profile img {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	margin-right: 10px;
+}
+
+main {
+	margin: 20px;
+}
+
+.post {
+	border: 1px solid #ddd;
+	padding: 10px;
+	margin-bottom: 20px;
+}
+
+.post-header {
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.post-user {
+	font-weight: bold;
+	margin: 0 10px;
+}
+
+.post-time {
+	color: #888;
+}
+
+.post-body {
+	margin-bottom: 10px;
+}
+
+.post-footer button {
+	margin-right: 10px;
+}
+
+.like-btn {
+	background-color: #4267B2;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 5px;
+}
+
+.comment-btn {
+	background-color: white;
+	color: #4267B2;
+	border: 1px solid #4267B2;
+	padding: 5px 10px;
+	border-radius: 5px;
+}
+
+.share-btn {
+	background-color: #4267B2;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 5px;
+}
+
+footer {
+    background-color: #f1f1f1;
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 14px;
+    color: #666;
+    border-top: 1px solid #ddd;
+}

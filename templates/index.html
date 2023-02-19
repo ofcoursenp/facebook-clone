@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% load static %}
+	<title>My Social Media Platform</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+</head>
+<body>
+	<header>
+		<div class="logo">My Social Media Platform</div>
+		<nav>
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li><a href="#">Explore</a></li>
+				<li><a href="#">Notifications</a></li>
+				<li><a href="#">Messages</a></li>
+			</ul>
+		</nav>
+		<div class="profile">
+			<img src="profile-pic.jpg" alt="Profile Picture">
+			<span>John Doe</span>
+		</div>
+	</header>
+
+	<main>
+		<div class="post">
+			<div class="post-header">
+				<img src="post-user-pic.jpg" alt="User Picture">
+				<span class="post-user">Jane Smith</span>
+				<span class="post-time">2 hours ago</span>
+			</div>
+			<div class="post-body">
+				<p>This is the post content. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+			</div>
+			<div class="post-footer">
+				<button class="like-btn">Like</button>
+				<button class="comment-btn">Comment</button>
+				<button class="share-btn">Share</button>
+			</div>
+		</div>
+
+		<!-- more posts here -->
+	</main>
+
+	<footer>
+		<p>&copy; 2023 My Social Media Platform</p>
+	</footer>
+</body>
+</html>

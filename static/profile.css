@@ -1,0 +1,45 @@
+img {
+    width: 100%;
+  }
+  
+  .card {
+    margin-bottom: 20px;
+}
+.profile-picture {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .profile-picture img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 50%;
+  }
+  
+  .bio {
+    margin-bottom: 20px;
+  }
+  
+  .follow-count {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .follow-count span {
+    margin-right: 10px;
+  }
+  
+  .posts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+  }
+
+body {
+    background-color: #f2f2f207;
+  }
+  
