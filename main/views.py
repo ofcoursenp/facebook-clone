@@ -3,6 +3,7 @@ from .forms import NewUserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
+from .models import DefineUser
 # Create your views here.
 
 
@@ -12,7 +13,10 @@ def index(req):
     
 @login_required(login_url='login')
 def profile(req):
-    return render(req,'profile.html')
+    profile = DefineUser.objects.filter(user=req.user).first()  # get the first profile instance for the user
+    profile_pic_url = profile.profilePic.url if profile.profilePic else None  # get the profile picture URL or None if there is no picture
+    send = {'profile': profile, 'profile_pic_url': profile_pic_url}
+    return render(req, 'profile.html', send)
 
 def register(req): 
     if req.user.is_authenticated:
@@ -49,9 +53,24 @@ def loginPage(req):
 
         return render(req,'login.html')
 
-
+@login_required(login_url='login')
 def logoutPage(req):
     logout(req)
     return redirect('login')
 
+@login_required(login_url='login')
+def edit(req):
+    try:
+        document = DefineUser.objects.get(user=req.user)
+    except DefineUser.DoesNotExist:
+        document = DefineUser(user=req.user)
+    if req.method == 'POST':
+        file2 = req.FILES.get('file')
+        bio = req.POST.get('bio')
+        if file2:
+            document.profilePic = file2
+        if bio:
+            document.bio = bio
+        document.save()
+    return render(req,'editprofile.html')
 

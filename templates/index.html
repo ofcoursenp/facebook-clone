@@ -6,23 +6,8 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 </head>
 <body>
-	<header>
-		<div class="logo">My Social Media Platform</div>
-		<nav>
-			<ul>
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Explore</a></li>
-				<li><a href="#">Notifications</a></li>
-				<li><a href="#">Messages</a></li>
-			</ul>
-		</nav>
-		<div class="profile">
-			<img src="profile-pic.jpg" alt="Profile Picture">
-			<span>John Doe</span>
-		</div>
-	</header>
-
-	<main>
+	{% include 'header.html' %}
+	<main style="padding-top: 140px;">
 		<div class="post">
 			<div class="post-header">
 				<img src="post-user-pic.jpg" alt="User Picture">

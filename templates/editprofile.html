@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Profile Edit Page</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <style>
+    /* Body styles */
+body {
+  background-color: #f5f5f5;
+  font-family: Arial, sans-serif;
+}
+
+/* Header styles */
+header {
+  background-color: #1877f2;
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+header a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Form styles */
+form {
+  margin: 50px auto;
+  width: 500px;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+form label {
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+form input[type="text"], form textarea {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+form input[type="submit"] {
+  background-color: #1877f2;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Profile picture styles */
+.profile-picture {
+  width: 200px;
+  height: 200px;
+  background-color: #ccc;
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 20px;
+  border-radius: 50%;
+}
+
+.profile-picture label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.profile-picture input[type="file"] {
+  display: none;
+}
+
+.profile-picture button {
+  background-color: #1877f2;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* Alert styles */
+.alert {
+  margin: 20px auto;
+  width: 500px;
+  background-color: #f44336;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.alert.success {
+  background-color: #4caf50;
+}
+
+.alert.hidden {
+  display: none;
+}
+  </style>
+  <body>
+{% include 'header.html' %}
+    <main>
+      <h1>Edit Profile</h1>
+      <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="bio" >Change Bio:</label>
+          <textarea id="bio" name="bio" style="width: 504px; height: 109px;" name="bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis elit id elit congue congue a a dolor. Suspendisse sagittis nisl eget bibendum laoreet.</textarea>
+        </div>
+        <div class="form-group">
+          <label for="avatar">Add a profile picture:</label>
+            <div class="Uplaod_files">
+                <input type="file" name='file' style="padding-bottom: 10px;" >
+        </div>
+        <button type="submit" style="padding-top: 10px;">Save Changes</button>
+      </form>
+    </main>
+{% include 'footer.html' %}
+  </body>
+</html>

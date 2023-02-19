@@ -13,11 +13,18 @@
   <div class="container mt-5">
     <div class="row">
       <div class="col-md-3">
-        <img src="profile-picture.jpg" alt="Profile Picture" class="img-fluid rounded-circle">
+        <img src='{{profile_pic_url}}' alt="Profile Picture" class="img-fluid rounded-circle" style="display: inline-block;
+            width: 172px;
+            height: 150px;
+            border-radius: 50%;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+        ">
       </div>
       <div class="col-md-9">
         <h1 class="display-4">{{ request.user }}</h1>
-        <p class="lead">Web Developer</p>
+        <p class="lead">Bio : {{ profile }}</p>
         <p class="mb-0">Followers: 100</p>
         <p class="mb-0">Following: 50</p>
         <p class="mt-2">{{ request.email }}</p>
