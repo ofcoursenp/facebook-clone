@@ -1,13 +1,75 @@
 from django.shortcuts import get_object_or_404
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponse
 from .forms import NewUserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
-from .models import DefineUser,Post,follow
+from .models import DefineUser,Post,follow,Like,Comment
 
 # Create your views here.
 
+def Like_post(req, post_id):
+    
+    userforlike = req.user
+    post = get_object_or_404(Post, id=post_id)
+    profile = DefineUser.objects.filter(user=post.user).first()
+    profile_pic_url = profile.profilePic.url if profile and profile.profilePic else None
+    current_likes = post.likes
+    liked = Like.objects.filter(user=userforlike,post=post).count()
+    comment_text = req.POST.get('comment_text')
+    user_id = userforlike.id
+    is_liked = ''
+    if not liked:
+        is_liked = ""
+        comments = Comment.objects.filter(post=post).order_by('-id')
+        send = {'items': post,'profile':profile_pic_url,'liked':is_liked,'comments':comments,'user_id':user_id}
+
+    else:
+        is_liked = "liked"
+        comments = Comment.objects.filter(post=post).order_by('-id')
+        send = {'items': post,'profile':profile_pic_url,'liked':is_liked,'comments':comments,'user_id':user_id}
+
+    if req.POST.get('like'):
+        if userforlike == post.user:
+            messages.info(req,'You cant like ur own post')
+            return redirect('home')
+        if not liked:
+            is_liked=''
+            liked = Like.objects.create(user=userforlike,post=post)
+            current_likes +=1
+            comments = Comment.objects.filter(post=post).order_by('-id')
+            send = {'items': post,'profile':profile_pic_url,'liked':is_liked,'comments':comments,'user_id':user_id}
+
+        else:
+            print(False)
+            is_liked='liked'
+            liked = Like.objects.filter(user=userforlike,post=post).delete()
+            current_likes -=1
+            comments = Comment.objects.filter(post=post).order_by('-id')
+            send = {'items': post,'profile':profile_pic_url,'liked':is_liked,'comments':comments,'user_id':user_id}
+
+    if req.POST.get('comment'):
+        comment_text = req.POST.get('comment')
+        if comment_text:
+            new_comment = Comment.objects.create(user=userforlike, post=post, comment=comment_text)
+            messages.success(req, 'Comment added successfully')
+        else:
+            messages.error(req, 'Comment text cannot be empty')
+
+        comments = Comment.objects.filter(post=post).order_by('-id')
+        send = {'items': post,'profile':profile_pic_url,'liked':is_liked,'comments':comments,'user_id':user_id}
+
+    print(comments)
+    comments = Comment.objects.filter(post=post).order_by('-id')
+    print(comments)     
+    post.likes = current_likes
+    post.save()
+    print(post.title)
+    print(is_liked)
+    send = {'items': post,'profile':profile_pic_url,'liked':is_liked,'comments':comments,'user_id':user_id}
+    return render(req, 'specificpost.html', send)
+    
+    
 
 @login_required(login_url='login')
 def index(req):
@@ -19,14 +81,14 @@ def index(req):
     for user in users:
         get_post = Post.objects.filter(user__username=user)
         add_post.append(get_post)
-        print(get_post)
-        print(add_post)
+        # print(get_post.id)
 
     if users:
         send = {'following':add_post}
         return render(req,'index.html',send)
     return render(req,'index.html')
     
+
 @login_required(login_url='login')
 def profile(req):
     profile = DefineUser.objects.filter(user=req.user).first()
@@ -37,6 +99,7 @@ def profile(req):
     print(post)
     send = {'profile': profile, 'profile_pic_url': profile_pic_url, 'account_created_at': account_created_at,'posts':post,'account_bio':account_bio,}
     return render(req, 'profile.html', send)
+
 
 def register(req): 
     if req.user.is_authenticated:

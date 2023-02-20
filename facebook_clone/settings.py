@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "crispy_bootstrap4",
     'main.apps.MainConfig',
     'rest_framework',
+    'api.apps.ApiConfig',
 ]
 
 

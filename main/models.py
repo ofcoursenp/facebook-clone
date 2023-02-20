@@ -17,6 +17,7 @@ class Post(models.Model):
     image = models.ImageField(null=True,blank=True,upload_to='post/images')
     created_on = models.DateField(auto_now_add=True)
     likes = models.IntegerField(default=0)
+    like_from = models.CharField(max_length=50)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     
     def __str__(self):
@@ -30,7 +31,13 @@ class follow(models.Model):
     def __str__(self):
         return self.following
 
-# class Follow(models.Model):
-#     user = models.ForeignKey(User,on_delete=models.CASCADE)
+class Like(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    post = models.ForeignKey(Post,on_delete=models.CASCADE)
 
+class Comment(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    post = models.ForeignKey(Post,on_delete=models.CASCADE)
+    comment = models.TextField(max_length=999)
+    
 

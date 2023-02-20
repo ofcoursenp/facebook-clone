@@ -8,6 +8,14 @@
 <body>
 	{% include 'header.html' %}
 	<main style="padding-top: 140px;">
+		{% for message in messages %}
+		<center>
+        <div class="alert alert-info" role="alert">
+            <b><p style="background-color: rgb(226, 74, 74);"> {{ message }} </p></b>
+        </div>
+		</center>
+        {% endfor %}
+
 		{% for i in following %}
 		{% for ind in i %}
 			<center>
@@ -16,17 +24,13 @@
 					<a href="/user/{{ ind.user.id }}" style="padding-right: 8px;">{{ ind }}</a>
 					<br>
 					<h4><b>{{ ind.title }}</b></h4>
+					<a style='padding-left: 200px;'  href="/post/{{ ind.id }}">view in detail To comment , like</a>
 				</div>
 				<div class="post-body">
 					{% if ind.image %}
 					<img src="/media/{{ ind.image }}" alt="User Picture">
 					{% endif %}
 					<p>{{ ind.text }}</p>
-				</div>
-				<div class="post-footer">
-					<button class="like-btn">Like</button>
-					<button class="comment-btn">Comment</button>
-					<button class="share-btn">Share</button>
 				</div>
 			</div>
 		</center>
