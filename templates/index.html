@@ -8,26 +8,36 @@
 <body>
 	{% include 'header.html' %}
 	<main style="padding-top: 140px;">
-		<div class="post">
-			<div class="post-header">
-				<img src="post-user-pic.jpg" alt="User Picture">
-				<span class="post-user">Jane Smith</span>
-				<span class="post-time">2 hours ago</span>
+		{% for i in following %}
+		{% for ind in i %}
+			<center>
+			<div class="post">
+				<div class="post-header">
+					<a href="/user/{{ ind.user.id }}" style="padding-right: 8px;">{{ ind }}</a>
+					<br>
+					<h4><b>{{ ind.title }}</b></h4>
+				</div>
+				<div class="post-body">
+					{% if ind.image %}
+					<img src="/media/{{ ind.image }}" alt="User Picture">
+					{% endif %}
+					<p>{{ ind.text }}</p>
+				</div>
+				<div class="post-footer">
+					<button class="like-btn">Like</button>
+					<button class="comment-btn">Comment</button>
+					<button class="share-btn">Share</button>
+				</div>
 			</div>
-			<div class="post-body">
-				<p>This is the post content. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-			</div>
-			<div class="post-footer">
-				<button class="like-btn">Like</button>
-				<button class="comment-btn">Comment</button>
-				<button class="share-btn">Share</button>
-			</div>
-		</div>
+		</center>
+		{% endfor %}
+		
+		{% endfor %}
 
 		<!-- more posts here -->
 	</main>
-
-	<footer>
+<div style="padding-top: 100px;"></div>
+	<footer >
 		<p>&copy; 2023 My Social Media Platform</p>
 	</footer>
 </body>

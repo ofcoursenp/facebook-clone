@@ -11,6 +11,20 @@ from .models import DefineUser,Post,follow
 
 @login_required(login_url='login')
 def index(req):
+    # followed = follow.objects.filter(user=req.user)
+    # print(followed)
+    users = follow.objects.filter(user_id=req.user.id)
+
+    add_post = []
+    for user in users:
+        get_post = Post.objects.filter(user__username=user)
+        add_post.append(get_post)
+        print(get_post)
+        print(add_post)
+
+    if users:
+        send = {'following':add_post}
+        return render(req,'index.html',send)
     return render(req,'index.html')
     
 @login_required(login_url='login')

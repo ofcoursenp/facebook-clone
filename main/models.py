@@ -27,6 +27,8 @@ class follow(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     following = models.CharField(max_length=40)
 
+    def __str__(self):
+        return self.following
 
 # class Follow(models.Model):
 #     user = models.ForeignKey(User,on_delete=models.CASCADE)
