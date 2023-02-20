@@ -67,7 +67,7 @@
         {% if items.image%}
         <img src='{{items.image.url}}' alt="Profile Picture" style="width: 50%;">
         {% endif %}
-        <h1 class="display-4">{{ items.title }}</h1>
+        <h1 class="display-4">{{ items.title }}</h1> <a href="/post/{{items.id}}">View in Detail</a>
         <p class="lead">{{ items.text }}</p>
         <hr class="my-4">
         <p>Created on : {{ items.created_on }}</p>
