@@ -120,6 +120,8 @@ def register(req):
                 usercreate = DefineUser.objects.create(bio='', user=new_user)  # Assign new_user to the user attribute
                 usercreate.save()
                 return redirect('login')
+            else:
+                messages.info(req, 'invalid registration details')
         return render(req,'register.html',send)
 
 def loginPage(req):

@@ -13,10 +13,14 @@
   <body>
     {% include 'header.html' %}
     <br>
-    <form action="" method="POST">
+    <form action="" method="POST" style="padding-top: 80px;">
+      {% for message in messages %}
+      <div class="alert alert-info" role="alert">
+          <p> {{ message }} </p>
+      </div>
+      {% endfor %}
       {% csrf_token %}
       <fieldset class="form-group">
-          <legend class="border-bottom mb-4" style="color: rgb(0, 0, 0);">Join Now</legend>
           {{ form|crispy }}
       </fieldset>
       <div class="form-group" id="signup-button">
