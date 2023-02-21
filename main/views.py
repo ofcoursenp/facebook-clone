@@ -11,6 +11,7 @@ from .models import DefineUser,Post,follow,Like,Comment
 def landing(req):
     return render(req,'landing.html')
 
+@login_required(login_url='login')
 def Like_post(req, post_id):
     
     userforlike = req.user
