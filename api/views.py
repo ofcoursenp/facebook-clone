@@ -190,7 +190,6 @@ def profile(req):
 #         return redirect('home')
 #     return render(req,'create.html')
 
-@login_required(login_url='login')
 @api_view(['GET'])
 def viewUser(req,name):
     if str(req.user.id) == name:
