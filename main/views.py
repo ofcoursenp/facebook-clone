@@ -215,3 +215,8 @@ def viewUser(req,name):
     
     return render(req, 'user.html', send)
 
+
+@login_required(login_url='login')
+def chatPage(req):
+    return render(req,'chat.html')
+

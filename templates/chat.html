@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Facebook Messenger Template</title>
+    <style>
+      /* Main container */
+      .container {
+        display: flex;
+        height: 100vh;
+      }
+      
+      /* People list on the left */
+      .people {
+        flex-basis: 20%;
+        background-color: #f4f4f4;
+        padding: 20px;
+      }
+      
+      .people h2 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+      }
+      
+      .people ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      
+      .people li {
+        margin-bottom: 10px;
+      }
+      
+      .people a {
+        text-decoration: none;
+        color: #333;
+        display: block;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      
+      .people a:hover {
+        background-color: #ddd;
+      }
+      
+      /* Messages section on the right */
+      .messages {
+        flex-grow: 1;
+        padding: 20px;
+      }
+      
+      .messages h2 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+      }
+      
+      .messages .message {
+        display: flex;
+        margin-bottom: 20px;
+      }
+      
+      .messages .message .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #ddd;
+        margin-right: 10px;
+      }
+      
+      .messages .message .content {
+        background-color: #f4f4f4;
+        padding: 10px;
+        border-radius: 5px;
+        flex-grow: 1;
+      }
+      
+      .messages .message .content .name {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      
+      /* Message input box at the bottom */
+      .message-input {
+        position: absolute;
+        bottom: 0;
+        left: 1;
+        right: 0;
+        display: flex;
+        padding: 20px;
+        background-color: #f4f4f4;
+        width: 74.4%;
+        color: aqua;
+        background: aqua;
+        padding-left: 19px;
+    }
+      
+      .message-input input[type="text"] {
+        flex-grow: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+      }
+      
+      .message-input button {
+        margin-left: 10px;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #333;
+        color: #fff;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+      
+      .message-input button:hover {
+        background-color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="people">
+        <h2>People</h2>
+        <ul>
+          <li><a href="#">John Doe</a></li>
+          <li><a href="#">Jane Doe</a></li>
+          <li><a href="#">Bob Smith</a></li>
+          <li><a href="#">Alice Jones</a></li>
+          <li><a href="#">Tom Brown</a></li>
+        </ul>
+      </div>
+      <div class="messages">
+        <h2>John Doe</h2>
+        <div class="message">
+          <div class="avatar"></div>
+          <div class="content">
+            <div class="name">John Doe</div>
+            <div class="text">Hi there!</div>
+            </div>
+            </div>
+            <div class="message">
+            <div class="avatar"></div>
+            <div class="content">
+            <div class="name">You</div>
+            <div class="text">Hello!</div>
+            </div>
+            </div>
+            <div class="message">
+            <div class="avatar"></div>
+            <div class="content">
+            <div class="name">John Doe</div>
+            <div class="text">How are you doing?</div>
+            </div>
+            </div>
+            <div class="message">
+            <div class="avatar"></div>
+            <div class="content">
+            <div class="name">You</div>
+            <div class="text">I'm doing well, thanks for asking. How about you?</div>
+            </div>
+            </div>
+            <div class="message">
+            <div class="avatar"></div>
+            <div class="content">
+            <div class="name">John Doe</div>
+            <div class="text">I'm good too. Just wanted to check in and say hi.</div>
+            </div>
+            </div>
+            </div>
+            <div class="message-input">
+            <input type="text" placeholder="Type your message here...">
+            <button>Send</button>
+            </div>
+            </div>
+            
+              </body>
+            </html>
