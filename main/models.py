@@ -40,4 +40,8 @@ class Comment(models.Model):
     post = models.ForeignKey(Post,on_delete=models.CASCADE)
     comment = models.TextField(max_length=999)
     
+class Chat(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    seeing = models.CharField(max_length=50)
+    chatting = models.TextField(max_length=999)
 

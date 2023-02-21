@@ -116,20 +116,57 @@
       .message-input button:hover {
         background-color: #666;
       }
+      .left-sidebar {
+        height: 100%;
+        width: 297px;
+        background-color: #f4f4f4;
+        overflow-y: auto; /* add scrollbar */
+      }
+      
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      
+      li {
+        padding: 10px;
+      }
+      
+      li a {
+        text-decoration: none;
+        color: #333;
+      }
+      
+      li a:hover {
+        background-color: #e6e6e6;
+      }
     </style>
   </head>
   <body>
-    <div class="container">
+    {% include 'header.html' %}
+    <div class="container" style='padding-top:55px'>
       <div class="people">
+        <div class="left-sidebar">
         <h2>People</h2>
         <ul>
           <li><a href="#">John Doe</a></li>
           <li><a href="#">Jane Doe</a></li>
+          <li><a href="#">Jane Doe</a></li>
+          <li><a href="#">Jane Doe</a></li>
+          <li><a href="#">Jane Doe</a></li>
+          <li><a href="#">Bob Smith</a></li>
+          <li><a href="#">Bob Smith</a></li>
+          <li><a href="#">Bob Smith</a></li>
+          <li><a href="#">Bob Smith</a></li>
+          <li><a href="#">Bob Smith</a></li>
+          <li><a href="#">Bob Smith</a></li>
           <li><a href="#">Bob Smith</a></li>
           <li><a href="#">Alice Jones</a></li>
           <li><a href="#">Tom Brown</a></li>
         </ul>
       </div>
+    </div>
       <div class="messages">
         <h2>John Doe</h2>
         <div class="message">

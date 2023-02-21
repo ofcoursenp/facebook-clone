@@ -115,6 +115,7 @@ def register(req):
             form = NewUserCreationForm(req.POST)
             if form.is_valid():
                 new_user = form.save()  # Save the newly created user
+                print(new_user)
                 user = form.cleaned_data.get('username')
                 messages.success(req,f'Account was created with username {user}')
                 usercreate = DefineUser.objects.create(bio='', user=new_user)  # Assign new_user to the user attribute
@@ -218,5 +219,7 @@ def viewUser(req,name):
 
 @login_required(login_url='login')
 def chatPage(req):
+
     return render(req,'chat.html')
+
 
