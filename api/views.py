@@ -106,7 +106,9 @@ from rest_framework.decorators import api_view
 #     seralized_item = DefineUserSeralizer(profile,many=True)
 #     # send = {'profile': profile, 'profile_pic_url': profile_pic_url, 'account_created_at': account_created_at,'posts':post,'account_bio':account_bio,}
 #     return Response(seralized_item.data)
-@api_view(['POST', 'GET'])
+
+# #############################################################################################
+@api_view(['GET'])
 @login_required(login_url='login')
 def profile(req):
     profile = DefineUser.objects.filter(user=req.user).first()
@@ -114,6 +116,7 @@ def profile(req):
     serialized_profile = DefineUserSeralizer(profile, many=False)
     serialized_posts = PostSeralizer(post, many=True)
     return Response({'profile': serialized_profile.data, 'posts': serialized_posts.data})
+# ###################################################################################################
 
 # def register(req): 
 #     if req.user.is_authenticated:
@@ -152,45 +155,46 @@ def profile(req):
 
         # return render(req,'login.html')
 
-@login_required(login_url='login')
-def logoutPage(req):
-    logout(req)
-    return redirect('login')
+# @login_required(login_url='login')
+# def logoutPage(req):
+#     logout(req)
+#     return redirect('login')
+
+# @login_required(login_url='login')
+# def edit(req):
+#     try:
+#         document = DefineUser.objects.get(user=req.user)
+#     except DefineUser.DoesNotExist:
+#         document = DefineUser(user=req.user)
+#     if req.method == 'POST':
+#         file2 = req.FILES.get('file')
+#         bio = req.POST.get('bio')
+#         if file2:
+#             document.profilePic = file2
+#         if bio:
+#             document.bio = bio
+#         document.save()
+
+#         return redirect('profile')
+
+#     return render(req,'editprofile.html')
+
+# @login_required(login_url='login')
+# def create(req):
+#     if req.method == "POST":
+#         title = req.POST.get('title')
+#         text = req.POST.get('content')
+#         image = req.FILES.get('image')
+#         user = req.user
+#         post = Post.objects.create(title=title,text=text,image=image,user=user,likes=0)
+#         return redirect('home')
+#     return render(req,'create.html')
 
 @login_required(login_url='login')
-def edit(req):
-    try:
-        document = DefineUser.objects.get(user=req.user)
-    except DefineUser.DoesNotExist:
-        document = DefineUser(user=req.user)
-    if req.method == 'POST':
-        file2 = req.FILES.get('file')
-        bio = req.POST.get('bio')
-        if file2:
-            document.profilePic = file2
-        if bio:
-            document.bio = bio
-        document.save()
-
-        return redirect('profile')
-
-    return render(req,'editprofile.html')
-
-@login_required(login_url='login')
-def create(req):
-    if req.method == "POST":
-        title = req.POST.get('title')
-        text = req.POST.get('content')
-        image = req.FILES.get('image')
-        user = req.user
-        post = Post.objects.create(title=title,text=text,image=image,user=user,likes=0)
-        return redirect('home')
-    return render(req,'create.html')
-
-@login_required(login_url='login')
+@api_view(['GET'])
 def viewUser(req,name):
     if str(req.user.id) == name:
-        return redirect('profile')
+        return redirect('')
     profile = DefineUser.objects.filter(user=name).first()
     account_created_at = profile.created_on if profile else None
     profile_pic_url = profile.profilePic.url if profile and profile.profilePic else None
@@ -200,13 +204,15 @@ def viewUser(req,name):
     print(post)
     try:
         following = follow.objects.get(user=req.user,following=profile)
-        is_following = "following"
+        is_following = True
     except Exception as e:
         is_following = False
         
         # print(is_following)
 
-    
+    profile_seralizer = DefineUserSeralizer(profile)
+    post_seralizer = PostSeralizer(post,many=True)
+
     send = {'profile': profile, 'profile_pic_url': profile_pic_url, 'account_created_at': account_created_at,'posts':post,'following':is_following,'id':id}
 
     # print(str(req.user.username) == profile)
@@ -214,12 +220,12 @@ def viewUser(req,name):
     # if str(req.user.username) == profile:
     #     return redirect('profile')
 
-    if req.method == 'POST':
-        if 'follow' in req.POST:
-            f = follow(user=req.user,following=profile)
-            f.save()
-        elif 'unfollow' in req.POST:
-            follow.objects.filter(user=req.user,following=profile).delete()
+    # if req.method == 'POST':
+    #     if 'follow' in req.POST:
+    #         f = follow(user=req.user,following=profile)
+    #         f.save()
+    #     elif 'unfollow' in req.POST:
+    #         follow.objects.filter(user=req.user,following=profile).delete()
     
-    return render(req, 'user.html', send)
+    return Response({'profile': profile_seralizer.data,'following':is_following, 'posts': post_seralizer.data})
 

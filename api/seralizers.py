@@ -3,6 +3,8 @@ from main.models import DefineUser,Post,follow,Like,Comment
 
 
 class DefineUserSeralizer(serializers.ModelSerializer):
+    id = serializers.IntegerField(source='user.id')
+    user = serializers.CharField(source='user.username')
     class Meta:
         model = DefineUser
         fields = '__all__'
