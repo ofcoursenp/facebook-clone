@@ -7,10 +7,9 @@ from main.models import DefineUser,Post,follow,Like,Comment
 from .seralizers import DefineUserSeralizer,PostSeralizer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from django.views.decorators.cache import cache_control
+from rest_framework import serializers
 
 
-@cache_control(no_cache=True, must_revalidate=True)
 
 # Create your views here.
 
@@ -79,7 +78,26 @@ from django.views.decorators.cache import cache_control
 #     send = {'items': post,'profile':profile_pic_url,'liked':is_liked,'comments':comments,'user_id':user_id}
 #     return render(req, 'specificpost.html', send)
     
-    
+
+
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = '__all__'
+
+@api_view(['GET'])
+@login_required(login_url='login')
+def index(req):
+    users = follow.objects.filter(user_id=req.user.id)
+    add_post = []
+    for user in users:
+        get_post = Post.objects.filter(user__username=user)
+        add_post.extend(get_post)
+
+    if users:
+        serializer = PostSerializer(add_post, many=True)
+        return Response(serializer.data)
+
 
 # @login_required(login_url='login')
 # def index(req):
@@ -114,7 +132,6 @@ from django.views.decorators.cache import cache_control
 # #############################################################################################
 
 
-@cache_control(no_cache=True, must_revalidate=True)
 @api_view(['GET'])
 def profile(req):
     profile = DefineUser.objects.filter(user=req.user).first()
@@ -197,7 +214,6 @@ def profile(req):
 #     return render(req,'create.html')
 
 
-@cache_control(no_cache=True, must_revalidate=True)
 @api_view(['GET'])
 def viewUser(req,name):
     if str(req.user.id) == name:
