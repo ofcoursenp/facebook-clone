@@ -7,6 +7,10 @@ from main.models import DefineUser,Post,follow,Like,Comment
 from .seralizers import DefineUserSeralizer,PostSeralizer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from django.views.decorators.cache import cache_control
+
+
+@cache_control(no_cache=True, must_revalidate=True)
 
 # Create your views here.
 
@@ -108,8 +112,10 @@ from rest_framework.decorators import api_view
 #     return Response(seralized_item.data)
 
 # #############################################################################################
+
+
+@cache_control(no_cache=True, must_revalidate=True)
 @api_view(['GET'])
-@login_required(login_url='login')
 def profile(req):
     profile = DefineUser.objects.filter(user=req.user).first()
     post = Post.objects.filter(user=req.user)
@@ -190,6 +196,8 @@ def profile(req):
 #         return redirect('home')
 #     return render(req,'create.html')
 
+
+@cache_control(no_cache=True, must_revalidate=True)
 @api_view(['GET'])
 def viewUser(req,name):
     if str(req.user.id) == name:

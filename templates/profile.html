@@ -22,7 +22,7 @@
               background-repeat: no-repeat;
               background-position: center center;
               background-size: cover;
-          ">
+          " id="imagesrc">
       {% else %}
       <img src="{% static 'default/img.png' %}" alt="Profile Picture" class="img-fluid rounded-circle" style="display: inline-block;
       width: 172px;
@@ -69,5 +69,48 @@
       {% include 'footer.html' %}
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"></script>
+    <script>
+    const url = `http://127.0.0.1:8000/api`;
+    async function fetchUserJSON() {
+      const request = new Request(url, {
+        cache: 'no-cache'
+      });
+      const response = await fetch(request);
+      const user = await response.json();
+      return user;
+    }
+    
+    let userProfile;
+    let data;
+    
+    fetchUserJSON()
+      .then(user => {
+        userProfile = user.profile;
+        return data = userProfile;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    
+    setInterval(() => {
+      fetchUserJSON()
+      .then(user => {
+        userProfile = user.profile;
+        return data = userProfile;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    }, 4000);
+   
+    setInterval(() => {
+  console.log(data.profilePic);
+  imgsrc = document.getElementById('imagesrc');
+  if (data.profilePic){
+    imgsrc.setAttribute('src', data['profilePic']);
+  }
+}, 1000);
+
+</script>
   </body>
   </html>
