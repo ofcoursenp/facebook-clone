@@ -38,7 +38,7 @@
         <div class="col-md-9">
           <h1 class="display-4">{{ profile }}</h1> 
           {% if profile and account_created_at %}
-          <p class="lead">Bio : {{ account_bio }}</p>
+          <p class="lead" id="bio">Bio : {{ account_bio }}</p>
           <p class="mt-2">Account Created on : {{ account_created_at }} </p>
           {% else %}
           <p class="lead">Go to <a href="{% url 'edit' %}">Add Bio</a> To see ur information </p>
@@ -96,20 +96,23 @@
       fetchUserJSON()
       .then(user => {
         userProfile = user.profile;
-        return data = userProfile;
+        data = userProfile
+        console.log(data.profilePic);
+        imgsrc = document.getElementById('imagesrc');
+        if (data.profilePic){
+          imgsrc.setAttribute('src', data['profilePic']);
+        }
+        if(data.bio){
+          bio = document.getElementById('bio')
+          bio.innerHTML = `Bio : ${data.bio}`
+        }
+
       })
       .catch(error => {
         console.error(error);
       });
-    }, 4000);
+    }, 10000);
    
-    setInterval(() => {
-  console.log(data.profilePic);
-  imgsrc = document.getElementById('imagesrc');
-  if (data.profilePic){
-    imgsrc.setAttribute('src', data['profilePic']);
-  }
-}, 1000);
 
 </script>
   </body>
