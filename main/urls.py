@@ -15,4 +15,5 @@ urlpatterns = [
     path('login',views.loginPage,name='login'),
     path('logout',views.logoutPage,name='logout'),
     path('chat',views.chatPage,name='chat'),
+    path('verify/<auth_token>',views.verify,name='verify'),
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

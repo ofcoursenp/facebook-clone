@@ -5,6 +5,10 @@ from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from .models import DefineUser,Post,follow,Like,Comment
+import uuid
+from django.conf import settings
+from django.core.mail import send_mail  
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -114,13 +118,17 @@ def register(req):
         send = {'form':form}
         if req.method == "POST":
             form = NewUserCreationForm(req.POST)
+
             if form.is_valid():
                 new_user = form.save()  # Save the newly created user
                 print(new_user)
                 user = form.cleaned_data.get('username')
-                messages.success(req,f'Account was created with username {user}')
-                usercreate = DefineUser.objects.create(bio='', user=new_user)  # Assign new_user to the user attribute
+                email = form.cleaned_data.get('email')
+                messages.success(req,f'Please Check your email {user} and then try to login')
+                auth_token = str(uuid.uuid4())
+                usercreate = DefineUser.objects.create(bio='', user=new_user,auth_token=auth_token)  # Assign new_user to the user attribute
                 usercreate.save()
+                mailing(email,auth_token)
                 return redirect('login')
             else:
                 messages.info(req, 'invalid registration details')
@@ -134,15 +142,21 @@ def loginPage(req):
         if req.method == "POST":
             username = req.POST.get('username')
             password = req.POST.get('password')
+            user_obj = User.objects.filter(username=username).first()
 
-            user = authenticate(req, username=username, password=password)
-            if user is not None:
-                login(req,user)
-                return redirect('home')
+            if DefineUser.objects.filter(user=user_obj).first():
+                if DefineUser.objects.filter(user=user_obj).first().is_verified:
+                    user = authenticate(req, username=username, password=password)
+                    if user is not None:
+                        login(req,user)
+                        return redirect('home')
 
-            else:
-                messages.warning(req,'Username or password is incorrect')
-                return render(req,'login.html')
+                    else:
+                        messages.warning(req,'Username or password is incorrect')
+                        return render(req,'login.html')
+                else:
+                    messages.warning(req,"Please verify your email")
+                
 
         return render(req,'login.html')
 
@@ -217,10 +231,36 @@ def viewUser(req,name):
     
     return render(req, 'user.html', send)
 
+def verify(request,auth_token):
+    print(auth_token)
+    try:
+        profile_obj = DefineUser.objects.filter(auth_token=auth_token).first()
+        print('found')
+        if profile_obj:
+            if profile_obj.is_verified:
+                print("Already verified")
+                return HttpResponse("Your account was verified already , You cant verifiy many times")
+            print('Not verified')
+            profile_obj.is_verified = True
+            profile_obj.save()
+            return HttpResponse("Your account has been verified now go to /login to login")
+        
+        else:
+            return HttpResponse("Invalid Token")
+    except Exception as e:
+        print(e)
 
 @login_required(login_url='login')
 def chatPage(req):
 
     return render(req,'chat.html')
 
+
+
+def mailing(email,token):
+    subject = 'To verifiy your account'
+    message = f'Link is here http://127.0.0.1:8000/verify/{token}'
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [email]
+    send_mail(subject,message,email_from,recipient_list=recipient_list)
 

@@ -7,6 +7,8 @@ class DefineUser(models.Model):
     profilePic = models.ImageField(null=True,blank=True,upload_to='images/profile/')
     created_on = models.DateTimeField(auto_now_add=True)
     user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='user')
+    auth_token = models.CharField(max_length=100)
+    is_verified = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.user)
