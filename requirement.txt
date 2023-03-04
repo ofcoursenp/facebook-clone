@@ -5,3 +5,4 @@ django-crispy-forms==2.0
 sqlparse==0.4.3
 tzdata==2022.7
 djangorestframework
+celery

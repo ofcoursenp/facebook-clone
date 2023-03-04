@@ -156,7 +156,10 @@ def loginPage(req):
                         return render(req,'login.html')
                 else:
                     messages.warning(req,"Please verify your email")
-                
+            else:
+                messages.warning(req,'Username or password is incorrect')
+                return render(req,'login.html')
+        
 
         return render(req,'login.html')
 
