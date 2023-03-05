@@ -7,10 +7,10 @@ try{
 }
 
 if (dark === 'true'){
-    document.getElementById('darkmode').innerHTML = 'Enable white mode -Beta'
+    document.getElementById('darkmode').innerHTML = 'Enable white mode'
 }
 else{
-    document.getElementById('darkmode').innerHTML = 'Enable dark mode -Beta'
+    document.getElementById('darkmode').innerHTML = 'Enable dark mode'
 }
 
 
@@ -19,7 +19,7 @@ btn.addEventListener('click',()=>{
     console.log('clicked')
     if(dark === 'true'){
     localStorage.setItem("dark", false);
-    document.getElementById('darkmode').innerHTML = 'Enable dark mode -Beta'
+    document.getElementById('darkmode').innerHTML = 'Enable dark mode'
     
     try{
         console.log(localStorage)
@@ -51,7 +51,7 @@ btn.addEventListener('click',()=>{
     }
     else{
         try{
-            document.getElementById('darkmode').innerHTML = 'Enable white mode -Beta'
+            document.getElementById('darkmode').innerHTML = 'Enable white mode'
             localStorage.setItem("dark", true);
             console.log(localStorage)
     document.body.style.background = '#5A5A5A'
