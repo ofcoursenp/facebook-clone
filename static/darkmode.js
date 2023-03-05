@@ -20,26 +20,30 @@ btn.addEventListener('click',()=>{
     if(dark === 'true'){
     localStorage.setItem("dark", false);
     document.getElementById('darkmode').innerHTML = 'Enable dark mode -Beta'
+    
     try{
         console.log(localStorage)
         document.body.style.background = '#FFFFFF'
         header = document.querySelector('header')
         header.style.background = '#FFFFFF'
+
         const jum = document.querySelectorAll('.jumbotron');
         jum.forEach(element => {
             element.style.background = '#FFFFFF';
         });
+        
+        footer = document.querySelector('footer')
+        footer.style.background = '#FFFFFF'
+
+        form = document.querySelector('form')
+        form.style.background = '#FFFFFF'
         
         const post = document.querySelectorAll('.post');
         post.forEach(element => {
             element.style.background = '#FFFFFF';
         });
                 
-        footer = document.querySelector('footer')
-        footer.style.background = '#FFFFFF'
 
-        form = document.querySelector('form')
-        form.style.background = '#FFFFFF'
     }catch(err){
         console.log(err)
     }
@@ -59,6 +63,8 @@ btn.addEventListener('click',()=>{
 
     });
 
+    footer = document.querySelector('footer')
+    footer.style.background = '#5A5A5A'
     form = document.querySelector('form')
     form.style.background = '#5A5A5A'
 
@@ -66,8 +72,6 @@ btn.addEventListener('click',()=>{
         post.forEach(element => {
         element.style.background = '#5A5A5A';
             
-        footer = document.querySelector('footer')
-        footer.style.background = '#5A5A5A'
 
     });
     }catch(err){
@@ -88,17 +92,18 @@ if(dark==='true'){
             console.log('try')
             element.style.background = '#5A5A5A';
         });
+
+        footer = document.querySelector('footer')
+        footer.style.background = '#5A5A5A'
+
+        form = document.querySelector('form')
+        form.style.background = '#5A5A5A'
     
         const post = document.querySelectorAll('.post');
             post.forEach(element => {
             element.style.background = '#5A5A5A';
         });
         
-        footer = document.querySelector('footer')
-        footer.style.background = '#5A5A5A'
-
-        form = document.querySelector('form')
-        form.style.background = '#5A5A5A'
 
         }catch(err){
             console.log(err)
